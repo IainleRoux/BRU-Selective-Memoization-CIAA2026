@@ -9,6 +9,7 @@ class ConstructionOption(Enum):
 
 class MemoSchemeOption(Enum):
     NONE = "none"
+    MFN = "mfn"
     CLOSURE_NODE = "cn"  # have a back-edge coming in that forms a loop
     IN_DEGREE = "in"  # state that have an in-degree > 1
 

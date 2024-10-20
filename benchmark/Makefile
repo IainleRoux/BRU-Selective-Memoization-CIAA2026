@@ -13,7 +13,7 @@ LOGS_DIR := $(LOGS_PREFIX)/$(TIMESTAMP)
 
 REGEX_TYPES := all sl
 CONSTRUCTIONS := thompson flat
-MEMO_SCHEMES := none cn in
+MEMO_SCHEMES := none mfn cn in
 SCHEDULERS := spencer lockstep
 MATCHING_TYPES := full partial
 
@@ -33,16 +33,16 @@ include makefiles/preprocessing.mk
 
 BENCHMARK_DIR := $(DATA_DIR)/benchmark
 BENCHMARK_ALL_FULL := $(addprefix $(BENCHMARK_DIR)/all-full-, \
-	$(shell echo {thompson,flat}-spencer-{cn,in,none}.jsonl) \
+	$(shell echo {thompson,flat}-spencer-{mfn,cn,in,none}.jsonl) \
 	$(shell echo {thompson,flat}-lockstep-none.jsonl))
 BENCHMARK_ALL_PARTIAL := $(addprefix $(BENCHMARK_DIR)/all-partial-, \
-	$(shell echo {thompson,flat}-spencer-{cn,in,none}.jsonl) \
+	$(shell echo {thompson,flat}-spencer-{mfn,cn,in,none}.jsonl) \
 	$(shell echo {thompson,flat}-lockstep-none.jsonl))
 BENCHMARK_SL_FULL := $(addprefix $(BENCHMARK_DIR)/sl-full-, \
-	$(shell echo {thompson,flat}-spencer-{cn,in,none}.jsonl) \
+	$(shell echo {thompson,flat}-spencer-{mfn,cn,in,none}.jsonl) \
 	$(shell echo {thompson,flat}-lockstep-none.jsonl))
 BENCHMARK_SL_PARTIAL := $(addprefix $(BENCHMARK_DIR)/sl-partial-, \
-	$(shell echo {thompson,flat}-spencer-{cn,in,none}.jsonl) \
+	$(shell echo {thompson,flat}-spencer-{mfn,cn,in,none}.jsonl) \
 	$(shell echo {thompson,flat}-lockstep-none.jsonl))
 .PHONY: benchmark
 benchmark: benchmark-all benchmark-sl
@@ -51,7 +51,7 @@ include makefiles/benchmark.mk
 
 STATISTICS_DIR := $(DATA_DIR)/statistics
 STATISTICS := $(addprefix $(STATISTICS_DIR)/, \
-	$(shell echo {all,sl}-{thompson,flat}-{cn,in,none}.jsonl))
+	$(shell echo {all,sl}-{thompson,flat}-{mfn,cn,in,none}.jsonl))
 .PHONY: statistics
 statistics: $(STATISTICS)
 include makefiles/statistics.mk
@@ -59,7 +59,7 @@ include makefiles/statistics.mk
 
 BENCHMARK_RESULTS_DIR := $(DATA_DIR)/benchmark_results
 BENCHMARK_RESULTS_ALL := $(addprefix $(BENCHMARK_RESULTS_DIR)/, \
-	$(shell echo all-{full,partial}-{thompson,flat}-spencer-{cn,in,none}.jsonl) \
+	$(shell echo all-{full,partial}-{thompson,flat}-spencer-{mfn,cn,in,none}.jsonl) \
 	$(shell echo all-{full,partial}-{thompson,flat}-lockstep-none.jsonl))
 .PHONY: benchmark-results
 benchmark-results: benchmark-results-all
