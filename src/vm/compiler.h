@@ -3,6 +3,7 @@
 
 #include "../re/parser.h"
 #include "program.h"
+#include "../stc/collection/linkedlist.h"
 
 typedef enum {
     BRU_THOMPSON,
@@ -20,6 +21,8 @@ typedef enum {
     BRU_MS_CN,
     BRU_MS_IN,
     BRU_MS_IAR,
+    BRU_MS_MFN,
+    BRU_MS_SHAMIR
 } BruMemoScheme;
 
 typedef struct {
@@ -34,6 +37,13 @@ typedef struct {
     const BruParser *parser; /**< the parser to get the regex tree            */
     BruCompilerOpts  opts;   /**< the options set for the compiler            */
 } BruCompiler;
+
+typedef struct {
+    StcLinkedList *optional; /**< the optional set for PTA */
+    StcLinkedList *required; /**< the required set for PTA */
+    StcLinkedList *memo_ancestors;
+    bru_byte_t     nullable; /**< whether the subexpression is nullable */
+} PTASets;
 
 #if !defined(BRU_VM_COMPILER_DISABLE_SHORT_NAMES) && \
     (defined(BRU_VM_COMPILER_ENABLE_SHORT_NAMES) ||  \

@@ -13,7 +13,7 @@ WARNING   := -Wall -Wextra -Wno-variadic-macros \
 EXTRA     := -std=c11
 STC_FLAGS := -DSTC_UTF_DISABLE_SV
 CFLAGS    := $(DEBUG) $(OPTIMISE) $(WARNING) $(EXTRA) $(STC_FLAGS)
-DFLAGS    ?= # -DBRU_DEBUG -DBRU_BENCHMARK
+DFLAGS    ?= -DBRU_BENCHMARK # -DBRU_DEBUG 
 
 # commands
 CC        := clang
@@ -37,8 +37,10 @@ EXE_SRC   := $(BRU_SRC)
 
 FATP_SRC  := slice.c string_view.c vec.c
 UTIL_SRC  := argparser.c utf.c
+COLL_SRC  := linkedlist.c
 STC_SRC   := $(addprefix $(STCDIR)/fatp/, $(FATP_SRC)) \
-			 $(addprefix $(STCDIR)/util/, $(UTIL_SRC))
+			 $(addprefix $(STCDIR)/util/, $(UTIL_SRC)) \
+			 $(addprefix $(STCDIR)/collection/, $(COLL_SRC))
 
 RE_SRC    := $(wildcard $(REDIR)/*.c)
 FA_SRC    := $(wildcard $(FADIR)/*.c) \

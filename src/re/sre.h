@@ -68,6 +68,7 @@ struct bru_regex_node {
     bru_cntr_t min;      /**< minimum value for counter                       */
     bru_cntr_t max;      /**< maximum value for counter                       */
     bru_byte_t nullable; /**< whether subtree at this node matches epsilon    */
+    bru_byte_t mfn;      /**< marks a node as a MFN */
 };
 
 #if !defined(BRU_RE_SRE_DISABLE_SHORT_NAMES) && \

@@ -100,6 +100,10 @@ static StcArgConvertResult convert_memo_scheme(const char *arg, void *out)
         *ms = BRU_MS_CN;
     else if (strcmp(arg, "iar") == 0 || strcmp(arg, "IAR") == 0)
         *ms = BRU_MS_IAR;
+    else if (strcmp(arg, "mfn") == 0 || strcmp(arg, "MFN") == 0)
+        *ms = BRU_MS_MFN;
+    else if (strcmp(arg, "shamir") == 0 || strcmp(arg, "SHAMIR") == 0)
+        *ms = BRU_MS_SHAMIR;
     else if (strcmp(arg, "none") == 0)
         *ms = BRU_MS_NONE;
     else
@@ -359,8 +363,8 @@ int main(int argc, const char **argv)
 {
     int           exit_code;
     StcArgParser *argparser;
-    BruOptions    options                        = { 0 };
-    static int    (*subcommands[])(BruOptions *) = { parse, compile, match };
+    BruOptions    options                     = { 0 };
+    static int (*subcommands[])(BruOptions *) = { parse, compile, match };
 
     argparser = setup_argparser(&options);
     stc_argparser_parse(argparser, argc, argv);

@@ -30,6 +30,8 @@ emit(BruStateMachine *sm, const BruRegexNode *re, const BruCompilerOpts *opts);
 
 /* --- API function definitions --------------------------------------------- */
 
+size_t k = SIZE_MAX;
+
 BruStateMachine *bru_thompson_construct(BruRegex               re,
                                         const BruCompilerOpts *opts)
 {
@@ -80,6 +82,15 @@ emit(BruStateMachine *sm, const BruRegexNode *re, const BruCompilerOpts *opts)
             state_ids.initial = state_ids.final = bru_smir_add_state(sm);
             bru_smir_state_append_action(sm, state_ids.final,
                                          bru_smir_action_char(re->ch));
+            if (opts->memo_scheme == BRU_MS_MFN &&
+                (opts->construction == BRU_FLAT ||
+                 opts->construction == BRU_THOMPSON)) {
+                if (re->mfn == 1) {
+                    bru_smir_state_prepend_action(
+                        sm, state_ids.final,
+                        bru_smir_action_num(BRU_ACT_MEMO, k--));
+                }
+            }
             break;
 
         case BRU_CC:
@@ -87,6 +98,15 @@ emit(BruStateMachine *sm, const BruRegexNode *re, const BruCompilerOpts *opts)
             bru_smir_state_append_action(
                 sm, state_ids.final,
                 bru_smir_action_predicate(bru_intervals_clone(re->intervals)));
+            if (opts->memo_scheme == BRU_MS_MFN &&
+                (opts->construction == BRU_FLAT ||
+                 opts->construction == BRU_THOMPSON)) {
+                if (re->mfn == 1) {
+                    bru_smir_state_prepend_action(
+                        sm, state_ids.final,
+                        bru_smir_action_num(BRU_ACT_MEMO, k--));
+                }
+            }
             break;
 
         case BRU_ALT:
@@ -167,6 +187,15 @@ emit(BruStateMachine *sm, const BruRegexNode *re, const BruCompilerOpts *opts)
                 bru_smir_trans_append_action(
                     sm, enter, bru_smir_action_num(BRU_ACT_EPSSET, re->rid));
             }
+
+            if (opts->memo_scheme == BRU_MS_MFN &&
+                opts->construction == BRU_THOMPSON) {
+                if (re->mfn == 1) {
+                    bru_smir_state_prepend_action(
+                        sm, sid, bru_smir_action_num(BRU_ACT_MEMO, k--));
+                }
+            }
+
             break;
 
         case BRU_PLUS:
@@ -196,6 +225,16 @@ emit(BruStateMachine *sm, const BruRegexNode *re, const BruCompilerOpts *opts)
                 bru_smir_trans_append_action(
                     sm, enter, bru_smir_action_num(BRU_ACT_EPSSET, re->rid));
             }
+
+            if (opts->memo_scheme == BRU_MS_MFN &&
+                opts->construction == BRU_THOMPSON) {
+                if (re->mfn == 1) {
+                    bru_smir_state_prepend_action(
+                        sm, state_ids.initial,
+                        bru_smir_action_num(BRU_ACT_MEMO, k--));
+                }
+            }
+
             break;
 
         case BRU_QUES:
