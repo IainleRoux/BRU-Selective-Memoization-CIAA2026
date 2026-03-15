@@ -1,3 +1,12 @@
+# BRU Selective Memoization CIAA 2026
+
+Notes:
+- This repository is a fork of an older version of [BRU](https://github.com/bkmwatling/BRU).
+- Implementations of the PTA algorithms can be found in `/src/vm/compiler.c`.
+- An implementation of Shamir's minimum feedback vertex set algorithm can be found in `/src/fa/transformers/memoisation.c`.
+- Implememtations of IN and CN memoisation can also be found in `/src/fa/transformers/memoisation.c`.
+- The code used for running the experiments comparing IN, CN, and MFN can be found in `/benchmark`.
+
 # The virtual machine approach to optimised regular expression matching in C
 
 The repo contains separate C source files for each stage of compiling
