@@ -1,0 +1,10 @@
+obj/
+bin/
+
+*.o
+
+# benchmark reproducible benchmark files
+
+benchmarks/**/*.jpg
+benchmarks/**/*.json
+!benchmarks/*.json
